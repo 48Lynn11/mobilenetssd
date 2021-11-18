@@ -168,6 +168,10 @@ def event_handle(event):
             replyObj = TextSendMessage(text="ง่วง")
             line_bot_api.reply_message(rtoken, replyObj)
         else :
+           headers = request.headers json_headers =
+           json.dumps({k:v for k, v in headers.items()})
+           json_line =
+           request.get_json(force=False,cache=False) '''
            replyObj = TextSendMessage(text=msg)
         line_bot_api.reply_message(rtoken, replyObj)
     elif msgType == "image":
