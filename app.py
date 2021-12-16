@@ -167,14 +167,18 @@ def event_handle(event,json_line):
         elif (msg == "ง่วงป่ะ") :
             replyObj = TextSendMessage(text="ง่วง")
             line_bot_api.reply_message(rtoken, replyObj)
+        elif msg == "covid" : 
+            url = "https://covid19.ddc.moph.go.th/api/Cases/today-cases-all" 
+            response = requests.get(url) 
+            response = response.json() 
+            replyObj = TextSendMessage(text=str(response)) 
+            line_bot_api.reply_message(rtoken, replyObj)    
         else :
-            headers = request.headers 
-            json_headers = ({k:v for k, v in headers.items()}) 
-            json_headers.update({'Host':'bots.dialogflow.com'}) 
-            url = "https://dialogflow.cloud.google.com/v1/integrations/line/webhook/47832df3-f294-495a-abdb-c16a00b3e853" 
-            requests.post(url,data=json_line, headers=json_headers)
-           replyObj = TextSendMessage(text=msg)
-        line_bot_api.reply_message(rtoken, replyObj)
+           headers = request.headers 
+           json_headers = ({k:v for k, v in headers.items()}) 
+           json_headers.update({'Host':'bots.dialogflow.com'}) 
+           url = "https://bots.dialogflow.com/line/931b7ef7-3948-402e-a49c-76786e302ebc/webhook" 
+           requests.post(url,data=json_line, headers=json_headers)
     elif msgType == "image":
         try:
             message_content = line_bot_api.get_message_content(event['message']['id'])
